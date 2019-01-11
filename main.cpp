@@ -22,24 +22,17 @@ int checkfile(const char* path){
 }
 int checkmyself(){
 	getdir();
-	ifstream fin;
-	fin.open("fisrtrun");
-	int s;
+	//check file start
 	if(!checkfile("mklist.exe"))return 1;
-	if(fin>>s){
-		//如果非第一次使用
-		fin.close();
+	//check file end
+	if(checkfile("firstrun")){
+		//if not first use
 		return 0;
 	}else{
-		//如果第一次使用
-		fin.close();
-		_mkdir((dir+"\\data").c_str());
+		//if first use
 		_mkdir((dir+"\\usr").c_str());
-		//自动生成账户Admin
-		_mkdir((dir+"\\usr\\Admin").c_str());
-		mkfile((dir+"\\usr\\Admin\\LISTNAMES").c_str());
-		system("mklist.exe Admin 正在观看");
-		system("mklist.exe Admin 已经看完");
+		//Automatic generation of user Admin
+		system("mkuser.exe Admin 1 NULL");
 		ofstream fout("firstrun");
 		fout<<0;
 		fout.close();
@@ -49,12 +42,12 @@ int checkmyself(){
 
 int main(int argc, char const *argv[])
 {
-	if(checkmyself()){//自检不通过
-		cout<<"自检不通过。请重新安装。\n";
+	if(checkmyself()){//Failed in "check myself"
+		cout<<"ERROR.\n----------------------\n";
 		system("pause");
 		return 0;
 	};
-	//登录
+	//Login
 
 	return 0;
 }
