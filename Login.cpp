@@ -65,7 +65,7 @@ void getUsername(string &s,int MAXLEN=32){
                 continue;
             case 13:
                 a[i]=0;
-                &s=a;
+                s=a;
                 putchar('\n');
                 return;
             default:
@@ -84,6 +84,6 @@ void getdir(){
 int main(){
 	string username,password;
 	cout<<"Username:";
-	gerUsername(username);
-	
+	getUsername(username);
+	return 0;
 }
