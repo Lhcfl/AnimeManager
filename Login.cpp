@@ -9,10 +9,15 @@ struct USER{
 }USER_NOW;
 string dir;
 map<string,USER> name2user;
-bool Logined=false;
 void load(string s=""){
     cout<<s;
     cout<<"\n-------------\n";
+}
+int checkfile(const char* path){
+	FILE* fe=fopen(path,"rb");
+	int r=(fgetc(fe)!=EOF);
+	fclose(fe);
+	return r;
 }
 void getPassword(string &s,int MAXLEN=16){
     char p;
@@ -64,6 +69,7 @@ void getUsername(string &s,int MAXLEN=32){
             case 32:
                 continue;
             case 13:
+                if(i==0)continue;
                 a[i]=0;
                 s=a;
                 putchar('\n');
@@ -81,9 +87,83 @@ void getdir(){
     GetCurrentDirectory(200,tmp_dir);
     dir=tmp_dir;
 }
-int main(){
-	string username,password;
+void finish(string username){
+    ofstream fout("logtmp");
+	fout<<username;
+	return;
+}
+int login(){
+    string username,password;
 	cout<<"Username:";
 	getUsername(username);
+    ifstream fin((dir+"\\usr\\"+username+"\\_USER").c_str());
+    
+    string tmp;
+    fin>>tmp;
+    if(tmp==""){
+        //User has not signed up
+        cout<<"You don't seem to be signed up. \n Press s to sign up, and c to cancel.\n";
+        if(getch()=='c'){
+            //Cancel
+            return -1;
+        }else{
+            cout<<"Press n to ignore password.";
+            if(getch()=='n'){
+                system(("mkuser.exe "+username+" 0 NULL").c_str());
+                finish(username);
+                return 0;
+            }else{
+                cout<<"Password:";
+                string pswd;
+                getPassword(pswd);
+                cout<<"Press your password again:";
+                string pswd2;
+                getPassword(pswd2);
+                if(pswd2!=pswd){
+                    cout<<"Inconsistent passwords!\n";
+                    return -1;
+                }else{
+                    system(("mkuser.exe "+username+" 0 "+pswd).c_str());
+                    finish(username);
+                    return 0;
+                }
+            }
+        }
+    }else{
+        //User has signed up
+        if(tmp!=username){
+            cout<<"Unexpected ERROR!\n";
+            return -1;
+        }
+        fin>>tmp;
+        tmp="";
+        fin>>tmp;
+        fin.close();
+        cout<<"Password:";
+        string pswd;
+        getPassword(pswd);
+        if(pswd!=tmp){
+            cout<<"Wrong password!\n";
+            return -1;
+        }else{
+            cout<<"Login successfully!\n";
+            finish(username);
+            return 1;
+        }
+    }
+    return -1;
+}
+int main(){
+    getdir();
+START:
+    if(checkfile("logtmp"))remove((dir+"\\logtmp").c_str());
+    //remove logtmp
+    if(checkfile("logtmp")){
+        cout<<"ERROR!";
+        finish("");
+        return 0;
+    }
+	int r=login();
+    if(r==-1)goto START;
 	return 0;
 }

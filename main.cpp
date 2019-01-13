@@ -4,6 +4,7 @@
 #include<windows.h>
 using namespace std;
 string dir;
+string username;
 void getdir(){
 	char tmp_dir[200];  
     GetCurrentDirectory(200,tmp_dir);
@@ -39,7 +40,14 @@ int checkmyself(){
 	}
 	return 0;
 }
-
+int login(){
+	ifstream fin("logtmp");
+	fin>>username;
+	fin.close();
+	remove((dir+"\\logtmp").c_str());
+	if(username=="")return 0;
+	return 1;
+}
 int main(int argc, char const *argv[])
 {
 	if(checkmyself()){//Failed in "check myself"
@@ -48,6 +56,25 @@ int main(int argc, char const *argv[])
 		return 0;
 	};
 	//Login
+	if(checkfile("logtmp"))remove((dir+"\\logtmp").c_str());
+    //remove logtmp
+    if(checkfile("logtmp")){
+        cout<<"ERROR!";
+		system("pause");
+        return 0;
+    }
+	system("Login.exe");
+	if(!login()){
+		cout<<"ERROR!";
+		system("pause");
+        return 0;
+	}
 
+	//Login successfully.
+	_sleep(1000);
+	system("cls");
+
+	cout<<"Welcome,"<<username;
+	system("pause");
 	return 0;
 }

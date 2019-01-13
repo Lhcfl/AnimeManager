@@ -17,7 +17,7 @@ File directory tree
 .
 firstrun    //a sign of firstrun
 main.exe    //developing
-Login.exe   //developing
+Login.exe   //if logined, a file called "logtmp" will be created;
 push.exe    //push.exe username listname object
 pop.exe     //pop.exe username listname object
 mklist.exe  //mklist.exe username listname
