@@ -48,6 +48,23 @@ int login(){
 	if(username=="")return 0;
 	return 1;
 }
+void printlistnames(){
+	ifstream fin((dir+"\\"+username+"\\LISTNAMES").c_str());
+	string s;
+	cout<<endl;
+	while(fin>>s){
+		cout<<s<<endl;
+	}
+}
+void printlist(string name){
+	ifstream fin((dir+"\\"+username+"\\"+names).c_str());
+	cout<<"\nData in "<<name<<endl;
+	string s;
+	while(fin>>s){
+		cout<<s<<endl;
+	}
+}
+
 int main(int argc, char const *argv[])
 {
 	if(checkmyself()){//Failed in "check myself"
@@ -75,6 +92,28 @@ int main(int argc, char const *argv[])
 	system("cls");
 
 	cout<<"Welcome,"<<username;
+	cout<<"\n----------------------\n";
+	cout<<"Your lists:\n"
+	printlistnames();
+
+	string command;
+	cout<<">"
+	while(cin>>command){
+		if(command=="?"){
+			cout<<
+			"?      Show help\n"
+			"pu     Push\n"
+			"l      Print Lists\n"
+			"ln     Print Listnames\n"
+			"po     Pop\n"
+			"m      Makelist\n"
+			"d      Delete list\n"
+			;
+		}
+	}
+
+
+
 	system("pause");
 	return 0;
 }

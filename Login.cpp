@@ -66,6 +66,15 @@ void getUsername(string &s,int MAXLEN=32){
             case -32:
                 getch();
                 continue;
+            case '\\':
+            case '/':
+            case '"':
+            case ':':
+            case '?':
+            case '*':
+            case '<':
+            case '>':
+            case '|':
             case 32:
                 continue;
             case 13:
@@ -102,7 +111,7 @@ int login(){
     fin>>tmp;
     if(tmp==""){
         //User has not signed up
-        cout<<"You don't seem to be signed up. \n Press s to sign up, and c to cancel.\n";
+        cout<<"You don't seem to be signed up. \n Press any key to sign up, and c to cancel.\n";
         if(getch()=='c'){
             //Cancel
             return -1;

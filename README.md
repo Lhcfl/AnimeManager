@@ -3,11 +3,11 @@
 
 ------------
 
-开发完成度30%
+开发完成度50%
 
 |功能|状态|
 |---|---|
-|登录|未开发|
+|登录|已开发|
 
 
 File directory tree
@@ -21,6 +21,7 @@ Login.exe   //if logined, a file called "logtmp" will be created;
 push.exe    //push.exe username listname object
 pop.exe     //pop.exe username listname object
 mklist.exe  //mklist.exe username listname
+rmlist.exe  //rmlist.exe username listname
 mkuser.exe  //mkuser.exe username label password (password=NULL means no password)
 data---NEEDLIST //A list of need
      |-AUTOMAKE //Auto LISTNAMES
